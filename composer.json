@@ -1,0 +1,22 @@
+{
+	"name": "evaldobarbosa/charon",
+	"description": "A little ORM with a simple syntax",
+	"type": "library",
+	"keywords": ["orm","database","entity","json"],
+	"homepage": "https://github.com/evaldobarbosa/charon",
+	"license": "LGPL-3.0",
+	"authors": [
+		{
+			"name": "Evaldo Barbosa",
+			"email": "evaldobarbosa@gmail.com"
+		}
+	],
+	"require": {
+		"php": "5.4"
+	},
+	"autoload": {
+		"psr-0": {
+            "evaldobarbosa\\charon": "src/"
+        }
+	}
+}
