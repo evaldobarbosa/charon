@@ -2,7 +2,6 @@
 	"name": "evaldobarbosa/charon",
 	"description": "A little ORM with a simple syntax",
 	"type": "library",
-	"version": "0.1"
 	"keywords": ["orm","database","entity","json"],
 	"homepage": "https://github.com/evaldobarbosa/charon",
 	"license": "LGPL-3.0",
