@@ -10,6 +10,14 @@ With Charon you will:
 * Use semantic filters
 * Get JSON without NoSQL
 
+Composer:
+---
+<pre>
+require: {
+	"evaldobarbosa/charon": "0.1.*@dev"
+}
+</pre>
+
 Usage:
 -------------------------
 $conn = new PDO('your_dsn');
