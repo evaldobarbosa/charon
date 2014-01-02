@@ -12,8 +12,7 @@
 		}
 	],
 	"require": {
-		"php": "5.4",
-		"evaldobarbosa/charon": "dev-master"
+		"php": "5.4"
 	},
 	"autoload": {
 		"psr-0": {
