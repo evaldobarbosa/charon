@@ -2,6 +2,7 @@
 	"name": "evaldobarbosa/charon",
 	"description": "A little ORM with a simple syntax",
 	"type": "library",
+	"version": "0.1"
 	"keywords": ["orm","database","entity","json"],
 	"homepage": "https://github.com/evaldobarbosa/charon",
 	"license": "LGPL-3.0",
@@ -12,12 +13,12 @@
 		}
 	],
 	"require": {
-		"php": "5.4"
+		"php": "5.4",
+		"evaldobarbosa/charon": "dev-master"
 	},
 	"autoload": {
 		"psr-0": {
             "evaldobarbosa\\charon": "src/"
         }
-	},
-	"version": "0.1"
+	}	
 }
