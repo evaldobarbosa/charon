@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-            "evaldobarbosa\\charon": "src/"
+            "EvaldoBarbosa\\Charon": "src/"
         }
 	},
 	"extra": {
