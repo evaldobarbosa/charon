@@ -19,17 +19,5 @@
             "evaldobarbosa\\charon": "src/"
         }
 	},
-	"repositories": [
-        {
-            "type": "package",
-            "version": "0.1",
-            "package": {
-                "name": "evaldobarbosa/charon",
-                "dist": {
-                    "url": "https://github.com/evaldobarbosa/charon/zipball/master",
-                    "type": "zip"
-                }
-            }
-        }
-    ]
+	"version": "0.1"
 }
