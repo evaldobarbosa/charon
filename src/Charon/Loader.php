@@ -84,6 +84,10 @@ class Loader {
 		
 		$this->recordset = $sql->fetchAll(PDO::FETCH_ASSOC);
 		
+		echo "<pre style='border: 1px solid #000;background-color: #CCC;'><h3>Debug</h3><hr/>",
+			print_r($this->recordset,true),
+			"</pre>";
+		
 		$fields = $this->main->getFields();
 		
 		$mr = new MapReduce($this->main, $this->recordset, $this->joins);

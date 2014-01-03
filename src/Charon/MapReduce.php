@@ -51,7 +51,7 @@ class MapReduce {
 	}
 	
 	function reducer( $value, $key ) {
-		$mainObj = $this->main->getInstance();
+		$mainObj = $this->main->cloneIt($key);
 			$mainObj->loadValues( $value );
 		
 		$this->addToCollection( $mainObj );
