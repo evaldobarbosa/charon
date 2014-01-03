@@ -50,9 +50,15 @@ abstract class Entity /*implements \JsonSerializable*/ {
 	
 	function __call($key,$arguments) {
 		$field = strtolower($key);
-		$field = preg_replace("/^(get)/", "", $key);
+		$meta = $this->getMetadata();
 		
-		$meta = $this->getMetadata(); 
+		if ( $field == "count" ) {
+			if ( $meta->hasRKey( $arguments[0] ) ) {
+				return count( $this->{$arguments[0]});
+			}
+		}
+		
+		$field = preg_replace("/^(get)/", "", $key);
 		
 		if ( $meta->hasField($field) || $meta->hasFKey($field) || $meta->hasRKey($field) ) {
 			return $this->{$field};

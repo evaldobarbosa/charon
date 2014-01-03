@@ -120,7 +120,14 @@ class MapReduce {
 					);
 				}
 				
-				$source[ $join->alias ] = $obj;
+				$rkeyObj = current($obj);
+				$nextEnt = Store::me()->get($class)->cloneIt( $rkeyObj['id'] );
+				$nextEnt->setAlias( $join->alias )->loadValues( $rkeyObj );
+				
+				$method = $md->getAdder( $join->alias );
+				$e->{$method}( $nextEnt );
+				//$source[ $join->alias ] = $obj;
+				$source[ $join->alias ][ $rkeyObj['id'] ] = $rkeyObj;
 				
 				break;
 		}
