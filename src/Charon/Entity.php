@@ -62,6 +62,7 @@ abstract class Entity /*implements \JsonSerializable*/ {
 	}
 	
 	function __get($key) {
+		echo $key;
 		switch ($key) {
 			case 'alias':
 				return $this->alias;
@@ -78,6 +79,10 @@ abstract class Entity /*implements \JsonSerializable*/ {
 			case 'table':
 			case 'tableName':
 				return $this->table;
+			default:
+				if ( $this->getMetadata()->hasField($key) ) {
+					return $this->{$key};
+				}
 		}
 	}
 	
