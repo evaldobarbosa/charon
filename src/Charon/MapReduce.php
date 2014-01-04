@@ -108,8 +108,8 @@ class MapReduce {
 				if ( isset($join->next) ) {
 					array_walk(
 						$obj,
-						function( &$item ) use ( $join, $class, $md, $e ) {
-							$nextEnt = Store::me()->get($class)->getInstance();
+						function( &$item ) use ( $join, $class, $md, &$nextId, &$e ) {
+							$nextEnt = Store::me()->get($class)->cloneIt( $item["id"] );
 							$nextEnt->setAlias( $join->alias )->loadValues( $item );
 							
 							$this->joinCascade( $nextEnt, $item, $join->next, $join->alias );
@@ -118,18 +118,21 @@ class MapReduce {
 							$e->{$method}( $nextEnt );
 						}
 					);
+				} else {
+				
+					$rkeyObj = current( $obj );
+					if ( isset( $rkeyObj['id'] ) ) {
+						$nextEnt = Store::me()->get($class)->cloneIt( $rkeyObj['id'] );
+						$nextEnt->setAlias( $join->alias )->loadValues( $rkeyObj );
+				
+						$method = $md->getAdder( $join->alias );
+						$e->{$method}( $nextEnt );
+					
+						$source[ $join->alias ][ $rkeyObj['id'] ] = $rkeyObj;
+					}
 				}
 				
-				$rkeyObj = current($obj);
-				if ( isset($rkeyObj['id']) ) {
-					$nextEnt = Store::me()->get($class)->cloneIt( $rkeyObj['id'] );
-					$nextEnt->setAlias( $join->alias )->loadValues( $rkeyObj );
-				
-					$method = $md->getAdder( $join->alias );
-					$e->{$method}( $nextEnt );
-				}
-				//$source[ $join->alias ] = $obj;
-				$source[ $join->alias ][ $rkeyObj['id'] ] = $rkeyObj;
+				$source[ $join->alias ] = $obj;
 				
 				break;
 		}

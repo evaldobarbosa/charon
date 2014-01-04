@@ -28,6 +28,10 @@ class JoinParser {
 				$this->splitToSql( $main, $item )
 			);
 		});
+		
+		if ( count($this->fields) == 0 ) {
+			$this->fields = $main->mapFields( $main->getInstance()->getAlias() );
+		}
 	}
 	
 	private function splitToSql( Metadata $from, $join ) {
