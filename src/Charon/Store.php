@@ -87,11 +87,11 @@ class Store {
 	/**
 	 * 
 	 * @param string $class
-	 * @return Boo\Metadata
+	 * @return Charon\Metadata
 	 */
 	function getMetadata($class) {
 		if ( $this->hasClass($class) ) {
-			$this->metadata[$class];
+			return $this->metadata[$class];
 		}
 	} 
 	
