@@ -48,3 +48,7 @@ Using json
 <pre>
   $rs = $dl->get(true);
 </pre>
+
+Example
+-------
+https://github.com/evaldobarbosa/charon-example
