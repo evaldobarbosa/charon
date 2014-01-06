@@ -14,7 +14,7 @@ Composer:
 ---
 <pre>
 require: {
-	"evaldobarbosa/charon": "0.1.*@dev"
+	"evaldobarbosa/charon": "0.3.*@dev"
 }
 </pre>
 
