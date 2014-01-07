@@ -5,7 +5,7 @@ use \PDO;
 use Charon\Store as s;
 use Infra\Sanitize\Sanitizer as snt;
 
-abstract class Entity /*implements \JsonSerializable*/ {
+abstract class Entity {
 	private $conn;
 	private $class;
 	private $shortName;
