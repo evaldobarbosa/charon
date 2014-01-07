@@ -83,7 +83,6 @@ class MapReduce {
 					
 				$obj = $this->map[ $join->alias ][ $id ];
 				
-				//$nextEnt = Store::me()->get($class)->getInstance();
 				$nextEnt = Store::me()->get($class)->cloneIt($id);
 				$nextEnt->setAlias( $join->alias )->loadValues( $obj );
 					
