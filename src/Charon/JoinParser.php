@@ -23,11 +23,10 @@ class JoinParser {
 		$this->joins = array();
 		
 		array_walk($joins, function($item) use ( $main ) {
-			/*$this->joins = array_merge(
+			$this->joins = array_merge(
 				$this->joins,
 				$this->splitToSql( $main, $item )
-			);*/
-			$this->joins[] = $this->splitToSql( $main, $item );
+			);
 		});
 		
 		if ( count($this->fields) == 0 ) {
