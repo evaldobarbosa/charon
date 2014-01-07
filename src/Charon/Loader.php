@@ -175,10 +175,14 @@ class Loader {
 		
 		$sql .= ") AS {$this->main->getInstance()->tableName}\n";
 		
-		$sql .= implode(
-			"\n",
-			$joins
-		);
+		try {
+			$sql .= implode(
+				"\n",
+				$joins
+			);
+		} catch ( \Exception $e ) {
+			echo "<!-- \n", print_r( $joins, true ), "\n-->";
+		}
 		
 		$sql .= $this->filter->getFilter();
 		
