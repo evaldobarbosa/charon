@@ -11,7 +11,7 @@ class MapReduce {
 	private $main;
 	private $joins;
 	
-	function __construct(Metadata $main, $data,$joins) {
+	function __construct(Metadata $main, $data, $joins) {
 		$this->main = $main;
 		$this->joins = $joins;
 		$this->collection = array();
@@ -21,12 +21,17 @@ class MapReduce {
 			throw new \Exception("You should give a valid recordset");
 		}
 		
+		/**
+		* This is a adapter to php version <= 5.4.14
+		*/
+		$_this = $this;
+
 		array_walk(
 			$data,
-			function($value) {
+			function($value) use ($_this) {
 				$record = (array)$value;
 				
-				array_walk($value, array($this,'mapper'), $record);
+					array_walk($value, array($_this,'mapper'), $record);
 			}
 		);
 		
@@ -56,9 +61,15 @@ class MapReduce {
 		
 		$this->addToCollection( $mainObj );
 		
-		array_walk($this->joins, function($join) use (&$value,&$mainObj) {
-			$this->joinCascade( $mainObj, $value, $join, $mainObj->getAlias() );
-		});
+		if (version_compare(phpversion(), '5.4.14', '<=')) {
+		    foreach ($this->joins as $join) {
+		    	$this->joinCascade( $mainObj, $value, $join, $mainObj->getAlias() );
+		    }
+		} else {
+			array_walk($this->joins, function($join) use (&$value,&$mainObj) {
+				$this->joinCascade( $mainObj, $value, $join, $mainObj->getAlias() );
+			});
+		}
 		
 		$this->collection[ $mainObj->id ] = $mainObj;
 		$this->reduce[ $mainObj->id ] = $value;
