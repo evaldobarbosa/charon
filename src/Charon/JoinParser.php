@@ -21,7 +21,7 @@ class JoinParser {
 	function process( Metadata $main, $joins ) {
 		$this->fields = array();
 		$this->joins = array();
-		
+
 		if (version_compare(phpversion(), '5.4.14', '<=')) {
 		    foreach ($joins as $item) {
 		    	$this->joins = array_merge(
