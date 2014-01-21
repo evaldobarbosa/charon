@@ -122,11 +122,19 @@ abstract class Entity {
 	function loadValues($fields) {
 		$myFields = $this->getMetadata()->getFields();
 		
-		array_walk($myFields, function($item,$key) use ($fields) {
-			if ( isset( $fields[$key] ) ) {
-				$this->{$key} = $fields[$key];
-			}
-		});
+		if (version_compare(phpversion(), '5.4.14', '<=')) {
+		    foreach ($myFields as $key=>$item) {
+		    	if ( isset( $fields[$key] ) ) {
+					$this->{$key} = $fields[$key];
+				}
+		    }
+		} else {
+			array_walk($myFields, function($item,$key) use ($fields) {
+				if ( isset( $fields[$key] ) ) {
+					$this->{$key} = $fields[$key];
+				}
+			});
+		}
 	}
 	
 	function loadFieldValuesOld($record) {
