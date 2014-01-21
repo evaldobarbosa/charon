@@ -22,12 +22,21 @@ class JoinParser {
 		$this->fields = array();
 		$this->joins = array();
 		
-		array_walk($joins, function($item) use ( $main ) {
-			$this->joins = array_merge(
-				$this->joins,
-				$this->splitToSql( $main, $item )
-			);
-		});
+		if (version_compare(phpversion(), '5.4.14', '<=')) {
+		    foreach ($joins as $item) {
+		    	$this->joins = array_merge(
+					$this->joins,
+					$this->splitToSql( $main, $item )
+				);
+		    }
+		} else {
+			array_walk($joins, function($item) use ( $main ) {
+				$this->joins = array_merge(
+					$this->joins,
+					$this->splitToSql( $main, $item )
+				);
+			});
+		}
 		
 		if ( count($this->fields) == 0 ) {
 			$this->fields = $main->mapFields( $main->getInstance()->getAlias() );
