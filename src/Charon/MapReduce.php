@@ -116,9 +116,8 @@ class MapReduce {
 				);
 				
 				if ( isset($join->next) ) {
-					array_walk(
-						$obj,
-						function( &$item ) use ( $join, $class, $md, &$nextId, &$e ) {
+					if (version_compare(phpversion(), '5.4.14', '<=')) {
+						foreach ($obj as $item) {
 							$nextEnt = Store::me()->get($class)->cloneIt( $item["id"] );
 							$nextEnt->setAlias( $join->alias )->loadValues( $item );
 							
@@ -127,7 +126,20 @@ class MapReduce {
 							$method = $md->getAdder( $join->alias );
 							$e->{$method}( $nextEnt );
 						}
-					);
+					} else {
+						array_walk(
+							$obj,
+							function( &$item ) use ( $join, $class, $md, &$nextId, &$e ) {
+								$nextEnt = Store::me()->get($class)->cloneIt( $item["id"] );
+								$nextEnt->setAlias( $join->alias )->loadValues( $item );
+								
+								$this->joinCascade( $nextEnt, $item, $join->next, $join->alias );
+								
+								$method = $md->getAdder( $join->alias );
+								$e->{$method}( $nextEnt );
+							}
+						);
+					}
 				} else {
 				
 					$rkeyObj = current( $obj );
