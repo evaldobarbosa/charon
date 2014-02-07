@@ -3,7 +3,7 @@ namespace Charon;
 
 use \PDO;
 use Charon\Store as s;
-use Infra\Sanitize\Sanitizer as snt;
+use Sanitize\Sanitizer as snt;
 
 abstract class Entity {
 	private $conn;
@@ -282,47 +282,7 @@ abstract class Entity {
 		$this->execPost($sql,array(),true);
 		
 		$this->id = $this->conn->lastInsertId();
-	}/* 
-	
-	function jsonSerialize() {
-		if ( !is_null($this->jsonDecorator) ) {
-			return $this->jsonDecorator->execute($this);
-		}
-		
-		$obj = new \stdClass();
-		
-		$f = $this->getMetadata()->getFields();
-		array_walk($f, function($item,$field) use ($obj) {
-			if ( $this->getMetadata()->notShowField($field) ) {
-				continue;
-			}
-			$obj->{$field} = $this->{$field};
-		});
-		
-		$f = $this->getMetadata()->getAllFKeyNames();
-		array_walk($f, function($item,$field) use ($obj) {
-			if ( is_null($this->{$field}) ) {
-				continue;
-			}
-			$obj->{$field} = $this->{$field};
-		});
-		
-		$f = $this->getMetadata()->getAllRKeyNames();
-		array_walk(
-			$f,
-			function($item, $key) use ($obj) {
-				if ( !isset($obj->{$key}) ) {
-					$obj->{$key} = array();
-				}
-				
-				foreach ( $this->{$key} as $k=>$v ) {
-					$obj->{$key}[] = $v;
-				}
-			}
-		);
-		
-		return $obj;
-	} */
+	}
 	
 	function isARKey($key) {
 		if ( !is_array($this->{$key}) ) {
