@@ -115,46 +115,27 @@ abstract class Entity {
 			s::me()->createAndAddClass($this->class);
 		}
 		
-		//return s::me()->getMetadata( $this->class );
 		return s::me()->get( $this->class );
 	}
 	
-	function loadValues($fields) {
+	function loadFieldValues($fields) {
 		$myFields = $this->getMetadata()->getFields();
+		$termo = "{$this->alias}__";
+		$tam = strlen($termo);
 		
 		if (version_compare(phpversion(), '5.4.14', '<=')) {
 		    foreach ($myFields as $key=>$item) {
-		    	if ( isset( $fields[$key] ) ) {
-					$this->{$key} = $fields[$key];
+		    	if ( isset( $fields[ "{$termo}{$key}" ] ) ) {
+					$this->{$key} = $fields[ "{$termo}{$key}" ];
 				}
 		    }
 		} else {
-			array_walk($myFields, function($item,$key) use ($fields) {
-				if ( isset( $fields[$key] ) ) {
-					$this->{$key} = $fields[$key];
+			array_walk($myFields, function($item, $key) use ($fields, $termo) {
+				if ( isset( $fields[ "{$termo}{$key}" ] ) ) {
+					$this->{$key} = $fields[ "{$termo}{$key}" ];
 				}
 			});
 		}
-	}
-	
-	function loadFieldValuesOld($record) {
-		array_walk(
-			$record,
-			function($item,$key) {
-				$termo = "{$this->alias}__";
-				$tam = strlen($termo);
-				
-				if ( $key !== "{$termo}id" ) {
-					if ( substr($key,0,$tam) == $termo ) {
-						$field = substr($key,$tam);
-							
-						$this->{$field} = $item;
-					}
-				}
-			}
-		);
-		
-		return $this;
 	}
 	
 	function find( $id, $attachRK=false ) {
