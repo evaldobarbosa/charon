@@ -155,7 +155,10 @@ abstract class Entity {
 			$this->id = $rs[0]["{$this->alias}__id"];
 			$this->loadFieldValues( $rs[0] );
 		
-			$loader->createEntitiesForFKeys($this, $rs);
+			/**
+			 * @todo Implementar rotina de lazyload
+			 */
+			//$mr = new MapReduce( s::me()->get($this->class), $rs, $joins);
 		} else {
 			throw new \Exception("{$this->shortName}: Record not found");
 		}
@@ -263,6 +266,10 @@ abstract class Entity {
 		$this->execPost($sql,array(),true);
 		
 		$this->id = $this->conn->lastInsertId();
+	}
+	
+	function getConnection() {
+		return $this->conn;
 	}
 	
 	function isARKey($key) {
