@@ -118,21 +118,39 @@ abstract class Entity {
 		return s::me()->get( $this->class );
 	}
 	
-	function loadFieldValues($fields) {
+	function loadValues($fields) {
+		$myFields = $this->getMetadata()->getFields();
+	
+		if (version_compare(phpversion(), '5.4.14', '<=')) {
+			foreach ($myFields as $key=>$item) {
+				if ( isset( $fields[$key] ) ) {
+					$this->{$key} = $fields[$key];
+				}
+			}
+		} else {
+			array_walk($myFields, function($item,$key) use ($fields) {
+				if ( isset( $fields[$key] ) ) {
+					$this->{$key} = $fields[$key];
+				}
+			});
+		}
+	}
+	
+	function loadFieldValues($record) {
 		$myFields = $this->getMetadata()->getFields();
 		$termo = "{$this->alias}__";
 		$tam = strlen($termo);
 		
 		if (version_compare(phpversion(), '5.4.14', '<=')) {
 		    foreach ($myFields as $key=>$item) {
-		    	if ( isset( $fields[ "{$termo}{$key}" ] ) ) {
-					$this->{$key} = $fields[ "{$termo}{$key}" ];
+		    	if ( isset( $record[ "{$termo}{$key}" ] ) ) {
+					$this->{$key} = $record[ "{$termo}{$key}" ];
 				}
 		    }
 		} else {
-			array_walk($myFields, function($item, $key) use ($fields, $termo) {
+			array_walk($myFields, function($item, $key) use ($record, $termo) {
 				if ( isset( $fields[ "{$termo}{$key}" ] ) ) {
-					$this->{$key} = $fields[ "{$termo}{$key}" ];
+					$this->{$key} = $record[ "{$termo}{$key}" ];
 				}
 			});
 		}

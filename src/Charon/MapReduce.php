@@ -20,7 +20,7 @@ class MapReduce {
 		if ( count($data) == 0 ) {
 			throw new \Exception("You should give a valid recordset");
 		}
-		
+
 		/**
 		* This is a adapter to php version <= 5.4.14
 		*/
@@ -31,7 +31,7 @@ class MapReduce {
 			function($value) use ($_this) {
 				$record = (array)$value;
 				
-					array_walk($value, array($_this,'mapper'), $record);
+				array_walk($value, array($_this,'mapper'), $record);
 			}
 		);
 		
