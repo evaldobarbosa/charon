@@ -155,8 +155,9 @@ abstract class Entity {
 		    }
 		} else {
 			array_walk($myFields, function($item, $key) use ($record, $termo) {
-				if ( isset( $record[ "{$termo}{$key}" ] ) ) {
-					$this->{$key} = $record[ "{$termo}{$key}" ];
+				$fieldname = "{$termo}{$key}";
+				if ( isset( $record[ $fieldname ] ) ) {
+					$this->{$key} = $record[ $fieldname ];
 				}
 			});
 		}
