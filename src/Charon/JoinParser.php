@@ -82,6 +82,9 @@ class JoinParser {
 				$fields
 			);
 			
+			if ( isset($j->source) )
+				$to->source = $j->source;
+			
 			$sql[] = $to->getJoin();
 			
 			$j = ( isset($j->next) )
@@ -136,6 +139,7 @@ class JoinParser {
 			
 			$current = new stdClass;
 			$current->alias = $piece;
+			$current->source = $j1->alias;
 			if ( $md->hasFKey($piece) ) {
 				$current->class = $md->getFKey($piece);
 			} else if ( $md->hasRKey($piece) ) { 

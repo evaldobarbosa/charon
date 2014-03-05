@@ -76,8 +76,8 @@ class Store {
 				$join->setTo($md);
 				$join->setFrom($other);
 		} else {
-			Notes::show( "{$field} throws an error" );
-			Notes::show( Store::me() );
+			throw new \Exception( "{$field} throws an error" );
+			//Notes::show( Store::me() );
 		}
 		$join->setAlias($field);
 		

@@ -18,7 +18,9 @@ abstract class Entity {
 	abstract function validate();
 	
 	function __construct(\PDO $conn = null ) {
-		$this->conn = $conn;
+		if ( !is_null($conn) ) {
+			$this->setConn( $conn );
+		}
 
 		$this->class = get_class($this);
 		
@@ -30,6 +32,10 @@ abstract class Entity {
 		$this->alias = $this->table;
 		
 		unset($ex);
+	}
+	
+	function setConn(\PDO $conn) {
+		$this->conn = $conn;
 	}
 	
 	function setId($value) {
@@ -149,7 +155,7 @@ abstract class Entity {
 		    }
 		} else {
 			array_walk($myFields, function($item, $key) use ($record, $termo) {
-				if ( isset( $fields[ "{$termo}{$key}" ] ) ) {
+				if ( isset( $record[ "{$termo}{$key}" ] ) ) {
 					$this->{$key} = $record[ "{$termo}{$key}" ];
 				}
 			});

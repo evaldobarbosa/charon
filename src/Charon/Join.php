@@ -4,6 +4,7 @@ namespace Charon;
 use Charon\Metadata;
 
 abstract class Join {
+	public $source;
 	protected $alias;
 	protected $from;
 	protected $to;
