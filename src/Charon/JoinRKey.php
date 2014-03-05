@@ -10,8 +10,11 @@ class JoinRKey extends Join {
 
 	function getJoin() {
 		$field = $this->from->getKeyByClass(
-			$this->to->getInstance()->class
-		);
+					$this->to->getInstance()->class
+				);
+		$source = ( !empty($this->source) )
+			? $this->source
+			: $this->to->getInstance()->tableName;
 
 		return sprintf(
 			"LEFT JOIN %s %s ON %s.%s_id = %s.id",
@@ -19,7 +22,7 @@ class JoinRKey extends Join {
 			$this->alias,
 			$this->alias,
 			$field,
-			$this->to->getInstance()->tableName
+			$source
 		);
 	}
 }

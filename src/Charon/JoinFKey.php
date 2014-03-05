@@ -9,14 +9,17 @@ class JoinFKey extends Join {
 	}
 
 	function getJoin() {
+		$source = ( !is_null($this->source) )
+			? $this->source
+			: $this->from->getInstance()->alias;
 		return sprintf(
-				"LEFT JOIN %s %s ON %s.id = %s.%s_id",
-				$this->to->getInstance()->tableName,
-				$this->alias,
-				$this->alias,
-				//$this->from->getInstance()->tableName,
-				$this->source,
-				$this->alias
+			"LEFT JOIN %s %s ON %s.id = %s.%s_id",
+			$this->to->getInstance()->tableName,
+			$this->alias,
+			$this->alias,
+			//$this->from->getInstance()->tableName,
+			$source,
+			$this->alias
 		);
 	}
 }

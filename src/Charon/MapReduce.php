@@ -142,15 +142,17 @@ class MapReduce {
 					}
 				} else {
 				
-					$rkeyObj = current( $obj );
-					if ( isset( $rkeyObj['id'] ) ) {
-						$nextEnt = Store::me()->get($class)->cloneIt( $rkeyObj['id'] );
-						$nextEnt->setAlias( $join->alias )->loadValues( $rkeyObj );
-				
-						$method = $md->getAdder( $join->alias );
-						$e->{$method}( $nextEnt );
+					//$rkeyObj = current( $obj );
+					foreach ( $obj as $rkeyObj ) {
+						if ( isset( $rkeyObj['id'] ) ) {
+							$nextEnt = Store::me()->get($class)->cloneIt( $rkeyObj['id'] );
+							$nextEnt->setAlias( $join->alias )->loadValues( $rkeyObj );
 					
-						$source[ $join->alias ][ $rkeyObj['id'] ] = $rkeyObj;
+							$method = $md->getAdder( $join->alias );
+							$e->{$method}( $nextEnt );
+						
+							$source[ $join->alias ][ $rkeyObj['id'] ] = $rkeyObj;
+						}
 					}
 				}
 				
