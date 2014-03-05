@@ -10,7 +10,7 @@ class JoinFKey extends Join {
 
 	function getJoin() {
 		return sprintf(
-				"/**/LEFT JOIN %s %s ON %s.id = %s.%s_id",
+				"LEFT JOIN %s %s ON %s.id = %s.%s_id",
 				$this->to->getInstance()->tableName,
 				$this->alias,
 				$this->alias,
