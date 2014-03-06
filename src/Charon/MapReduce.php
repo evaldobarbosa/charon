@@ -133,7 +133,8 @@ class MapReduce {
 								$nextEnt = Store::me()->get($class)->cloneIt( $item["id"] );
 								$nextEnt->setAlias( $join->alias )->loadValues( $item );
 								
-								$this->joinCascade( $nextEnt, $item, $join->next, $join->alias );
+								//$this->joinCascade( $nextEnt, $item, $join->next, $join->alias );
+								$this->joinCascade( $nextEnt, $item, $join->next, $nextEnt->table );
 								
 								$method = $md->getAdder( $join->alias );
 								$e->{$method}( $nextEnt );
