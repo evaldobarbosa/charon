@@ -66,6 +66,20 @@ class Loader {
 		return $this;
 	}
 	
+	function exists($entity=null) {
+		$sql = $this->conn->prepare(
+			$this->getSQL()
+		);
+		
+		$sql->execute();
+		
+		$exists = ( $sql->rowCount() > 0 );
+		
+		unset( $sql );
+		
+		return $exists;
+	}
+	
 	function get($asJson=false) {
 		$this->getFilter()->beginsAt(0)->range(1);
 		
@@ -86,10 +100,9 @@ class Loader {
 		
 		$fields = $this->main->getFields();
 		
-		$mr = new MapReduce($this->main, $this->recordset, $this->joins);
-		
-		$this->collection = $mr->getCollection($asJson);
-		//echo "<pre>", json_encode($this->collection), "</pre>";
+			$mr = new MapReduce($this->main, $this->recordset, $this->joins);
+
+			$this->collection = $mr->getCollection($asJson);
 		
 		unset($mr);
 		

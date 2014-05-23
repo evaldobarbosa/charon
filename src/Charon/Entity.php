@@ -36,6 +36,8 @@ abstract class Entity {
 	
 	function setConn(\PDO $conn) {
 		$this->conn = $conn;
+		
+		return $this;
 	}
 	
 	function setId($value) {
@@ -120,7 +122,6 @@ abstract class Entity {
 		if ( !s::me()->hasClass($this->class) ) {
 			s::me()->createAndAddClass($this->class);
 		}
-		
 		return s::me()->get( $this->class );
 	}
 	
@@ -206,7 +207,8 @@ abstract class Entity {
 	}
 	
 	private function getFieldsToSave() {
-		$fields = s::me()->getMetadata($this->class)->getFields();
+		//$fields = s::me()->getMetadata($this->class)->getFields();
+		$fields = $this->getMetadata()->getFields();
 			unset($fields['id']);
 			
 		$keys = s::me()->getMetadata($this->class)->getAllFKeys();
