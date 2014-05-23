@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=5.3",
-		"evaldobarbosa/sanitizer": "0.5.*@dev"
+		"evaldobarbosa/sanitizer": "0.5.1"
 	},
 	"autoload": {
 		"classmap": [
@@ -22,7 +22,7 @@
 	},
 	"extra": {
         "branch-alias": {
-            "dev-master": "0.4-dev"
+            "dev-master": "0.5.*"
         }
     }
 }
