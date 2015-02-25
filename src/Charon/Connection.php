@@ -8,10 +8,14 @@ class Connection {
 	
 	function __construct() {
 		if ( !defined("DSN") ) {
-			throw new \Exception('Dados na conexão não informados');
+			throw new \Exception('Dados da conexão não informados');
 		}
 		
 		$p = parse_url(DSN);
+
+		$options = ( $p['scheme'] == 'mysql' )
+			? [ \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8' ]
+			: [];
 		
 		$this->conn = new \PDO(
 			sprintf(
@@ -22,7 +26,8 @@ class Connection {
 				str_replace( '/', '', $p['path'] )
 			),
 			$p['user'],
-			$p['pass']
+			$p['pass'],
+			$options
 		);
 	}
 	
