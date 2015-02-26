@@ -39,6 +39,14 @@ abstract class Entity {
 		
 		return $this;
 	}
+
+	function getConn() {
+		if ( is_null($this->conn) ) {
+			$this->conn = Connection::me()->get();
+		}
+
+		return $this->conn;
+	}
 	
 	function setId($value) {
 		$this->id = snt::add('int', 'id')->sanitize($value);
@@ -137,6 +145,7 @@ abstract class Entity {
 		} else {
 			array_walk($myFields, function($item,$key) use ($fields) {
 				if ( isset( $fields[$key] ) ) {
+//					echo "{$this->table}.{$key} => {$fields[$key]} \n";
 					$this->{$key} = $fields[$key];
 				}
 			});
@@ -165,12 +174,12 @@ abstract class Entity {
 	}
 	
 	function find( $id, $attachRK=false ) {
-		$loader = new Loader($this->conn);
+		$loader = new Loader($this->getConn());
 		
 		$sql = $loader->load($this->class)->getSQL();
 		$sql .= " WHERE id = :id";
 		
-		$ds = $this->conn->prepare($sql);
+		$ds = $this->getConn()->prepare($sql);
 		$ds->bindParam(':id', $id, PDO::PARAM_INT);
 		
 		$ds->execute();
@@ -223,7 +232,7 @@ abstract class Entity {
 	}
 	
 	private function execPost( $sql, $fields, $bindId=false ) {
-		$ds = $this->conn->prepare($sql);
+		$ds = $this->getConn()->prepare($sql);
 		
 		foreach ( $fields as $key=>$value ) {
 			if ( is_object( $this->{$key} ) ) {
@@ -262,7 +271,7 @@ abstract class Entity {
 		
 		$this->execPost($sql,$fields);
 		
-		$this->id = $this->conn->lastInsertId();
+		$this->id = $this->getConn()->lastInsertId();
 	}
 	
 	private function update() {
@@ -284,7 +293,7 @@ abstract class Entity {
 		
 		$this->execPost($sql,$fields,true);
 		
-		$this->id = $this->conn->lastInsertId();
+		//$this->id = $this->conn->lastInsertId();
 	}
 	
 	function delete() {
@@ -292,7 +301,7 @@ abstract class Entity {
 		
 		$this->execPost($sql,array(),true);
 		
-		$this->id = $this->conn->lastInsertId();
+		$this->id = $this->getConn()->lastInsertId();
 	}
 	
 	function getConnection() {
